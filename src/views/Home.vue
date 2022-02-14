@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="default dashboard">
+    <HomePageStat />
+    <div class="line">
+      <HomePageChart />
+      <HomePageLastOrders />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import axios from "axios";
+import HomePageChart from "../components/HomePageChart.vue";
+import HomePageStat from "../components/HomePageStat.vue";
+import HomePageLastOrders from "../components/HomePageLastOrders.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    HomePageChart,
+    HomePageStat,
+    HomePageLastOrders,
+  },
+  data: () => ({}),
+  created() {
+    this.$store.state.active = "home";
+  },
+};
 </script>
+
+<style scoped>
+.chart {
+  width: 100%;
+}
+</style>
