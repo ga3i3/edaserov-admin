@@ -23,6 +23,7 @@
     "vue-chartjs": "^3.5.1",
     "vue-filepond": "^6.0.0",
     "vue-router": "^3.2.0",
+    "vue-the-mask": "^0.11.1",
     "vuesax": "^4.0.1-alpha.25",
     "vuex": "^3.4.0"
   },

@@ -13,7 +13,24 @@ const routes = [
 	{
 		path: '/orders',
 		name: 'Orders',
-		component: () => import('../views/Orders.vue')
+		component: () => import('../views/Orders/Orders.vue'),
+		children: [
+			{
+				name: 'ListOrders',
+				path: '/orders/',
+				component: () => import('../views/Orders/List.vue'),
+			},
+			{
+				name: 'SearchOrder',
+				path: '/orders/search',
+				component: () => import('../views/Orders/Search.vue'),
+			},
+			{
+				name: 'ViewOrder',
+				path: '/orders/view/:id',
+				component: () => import('../views/Orders/View.vue'),
+			},
+		],
 	},
 	{
 		path: '/products',
@@ -29,6 +46,11 @@ const routes = [
 				name: 'AddProduct',
 				path: '/products/add',
 				component: () => import('../views/Products/Add.vue'),
+			},
+			{
+				name: 'EditProduct',
+				path: '/products/:id',
+				component: () => import('../views/Products/Edit.vue'),
 			},
 		],
 	},

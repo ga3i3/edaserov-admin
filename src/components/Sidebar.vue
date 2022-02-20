@@ -21,8 +21,9 @@
       </template>
 
       <vs-sidebar-item id="orders" to="/orders"> Все заказы </vs-sidebar-item>
-      <vs-sidebar-item id="orders_create">Создать заказ</vs-sidebar-item>
-      <vs-sidebar-item id="orders_search">Поиск по заказам</vs-sidebar-item>
+      <vs-sidebar-item id="orders_search" to="/orders/search"
+        >Поиск по заказам</vs-sidebar-item
+      >
     </vs-sidebar-group>
 
     <vs-sidebar-group>
