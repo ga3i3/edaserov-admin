@@ -102,8 +102,8 @@
             <div class="right">
               <span class="price">{{
                 order.discount
-                  ? currencyFormat(order.discount)
-                  : currencyFormat(order.total)
+                  ? $currency(order.discount)
+                  : $currency(order.total)
               }}</span>
               <div class="stock">
                 <vs-button flat :to="`/orders/view/${order._id}`">

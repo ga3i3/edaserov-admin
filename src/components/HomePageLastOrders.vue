@@ -24,13 +24,15 @@
             <span>{{ phoneFormat(tr.phone) }}</span>
           </vs-td>
           <vs-td>
-            <span>{{ tr.total }}</span> руб.
+            <span>{{
+              tr.discount ? $currency(tr.discount) : $currency(tr.total)
+            }}</span>
           </vs-td>
           <vs-td>
             {{ getTime(tr._timestamp) }}
           </vs-td>
           <vs-td>
-            <vs-button flat :to="`/orders/${tr._id}`"> Перейты </vs-button>
+            <vs-button flat :to="`/orders/view/${tr._id}`"> Перейты </vs-button>
           </vs-td>
         </vs-tr>
       </template>

@@ -1,7 +1,5 @@
 <template>
-  <div class="default">
-    <h1>Клиенты</h1>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>

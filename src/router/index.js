@@ -57,7 +57,19 @@ const routes = [
 	{
 		path: '/users',
 		name: 'Users',
-		component: () => import('../views/Users.vue')
+		component: () => import('../views/Users/Users.vue'),
+		children: [
+			{
+				name: 'ListUsers',
+				path: '/users/',
+				component: () => import('../views/Users/List.vue'),
+			},
+			{
+				name: 'SearchUsers',
+				path: '/users/search',
+				component: () => import('../views/Users/Search.vue'),
+			},
+		],
 	}
 ]
 

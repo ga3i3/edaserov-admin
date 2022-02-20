@@ -80,8 +80,8 @@
             <div class="right">
               <span class="price">{{
                 order.discount
-                  ? currencyFormat(order.discount)
-                  : currencyFormat(order.total)
+                  ? $currency(order.discount)
+                  : $currency(order.total)
               }}</span>
               <div class="stock">
                 <vs-button flat :to="`/orders/view/${order._id}`">
@@ -226,13 +226,6 @@ export default {
       } else if (type == "incafe") {
         return "В кафе";
       }
-    },
-    currencyFormat(total) {
-      const total_format = new Intl.NumberFormat("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-      }).format(total);
-      return total_format;
     },
   },
 };

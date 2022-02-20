@@ -415,6 +415,10 @@ html {
 			justify-content: flex-end;
 			> * {
 				margin-left: 10px;
+
+				&:first-child {
+					margin-left: 0;
+				}
 			}
 			del {
 				font-size: 16px;
@@ -429,14 +433,24 @@ html {
 				font-family: 'Roboto', sans-serif;
 			}
 
-			span.percent {
-				text-align: center;
-				width: 50px;
-				display: inline-block;
-				padding: 10px;
-				border: 1px solid #ddd;
-				border-radius: 9px;
+			.percent {
+				margin-right: auto;
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+
+				label {
+					margin-bottom: 5px !important;
+				}
+				// text-align: center;
+				// width: 50px;
+				// display: inline-block;
+				// padding: 10px;
+				// border: 1px solid #ddd;
+				// border-radius: 9px;
 			}
+
+			
 		}
 
 	}
@@ -794,6 +808,10 @@ html {
 		.right {
 			width: 20% !important;
 		}
+
+		.price {
+			font-weight: 300 !important;
+		}
 	}
 }
 
@@ -897,7 +915,8 @@ html {
 		}
 
 		h2 {
-			margin: 5px 0 0 0
+			margin: 5px 0 0 0;
+			font-weight: 500;
 		}
 
 		.left {
@@ -941,6 +960,22 @@ html {
 		}
 	}
 }
+
+.users.list {
+	.cat a {
+		font-family: 'Roboto', sans-serif;
+		text-decoration: none;
+	}
+
+	.links {
+		display: none !important;
+	}
+
+	.inlist {
+		width: 100% !important;
+	}
+}
+
 
 .filepond--credits {
   display: none !important;

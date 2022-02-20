@@ -122,9 +122,18 @@
           </div>
           <div class="amount">
             <div class="total">
-              <span class="percent" v-if="order.percent"
-                >-{{ order.percent }}%</span
+              <div
+                class="percent"
+                :class="editMode ? 'editmodON' : 'editmodOFF'"
               >
+                <label>Величина скидки</label>
+                <input
+                  type="number"
+                  v-model="order.percent"
+                  max="100"
+                  min="1"
+                />
+              </div>
               <del v-if="discount">{{ getSubtotal }}</del>
               <span v-if="discount" class="discount">{{
                 currencyFormat(discount)
@@ -318,31 +327,51 @@ export default {
             res.data.doc.cart.map((item, index) => {
               this.order.cart[index]._gnrt = this.generateID();
             });
+
+            if (res.data.doc.user != "guest") {
+              this.checkHaveUser(res.data.doc.user);
+            }
             loading.close();
           },
           (err) => {
             if (err) this.notfound = true;
           }
         );
-      if (this.order.user != "guset") {
-        this.$axios
-          .get(
-            `${process.env.VUE_APP_MAIN_URL}/admin/user/parse/${this.order.user}`,
-            {
-              headers: {
-                token: localStorage.getItem("token"),
-              },
-            }
-          )
-          .then(
-            (res) => {
-              this.user = res.data.doc;
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-      }
+      // if (this.order.user != "guset") {
+      //   await this.$axios
+      //     .get(
+      //       `${process.env.VUE_APP_MAIN_URL}/admin/user/${this.order.user}`,
+      //       {
+      //         headers: {
+      //           token: localStorage.getItem("token"),
+      //         },
+      //       }
+      //     )
+      //     .then(
+      //       (res) => {
+      //         this.user = res.data.doc;
+      //       },
+      //       (err) => {
+      //         console.log(err);
+      //       }
+      //     );
+      // }
+    },
+    checkHaveUser(id) {
+      this.$axios
+        .get(`${process.env.VUE_APP_MAIN_URL}/admin/user/${id}`, {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        })
+        .then(
+          (res) => {
+            this.user = res.data.doc;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
     },
     phoneFormat(phone) {
       return phoneFormatter.format(phone, "(NNN) NNN-NNNN");
@@ -487,6 +516,12 @@ export default {
             }
           );
       } else {
+        this.$vs.notification({
+          progress: "auto",
+          position: "bottom-right",
+          color: "warning",
+          title: "С начало включите режим редактирование",
+        });
       }
     },
     generateID() {

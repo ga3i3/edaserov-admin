@@ -44,12 +44,21 @@
       </vs-sidebar-item>
     </vs-sidebar-group>
 
-    <vs-sidebar-item id="users" to="/users">
-      <template #icon>
-        <Icon icon="iconoir:user-cart" />
+    <vs-sidebar-group>
+      <template #header>
+        <vs-sidebar-item arrow>
+          <template #icon>
+            <Icon icon="iconoir:user-cart" />
+          </template>
+          Клиенты
+        </vs-sidebar-item>
       </template>
-      Клиенты
-    </vs-sidebar-item>
+
+      <vs-sidebar-item id="users" to="/users"> Все клиенты </vs-sidebar-item>
+      <vs-sidebar-item id="users_search" to="/users/search">
+        Поиск по клиентам
+      </vs-sidebar-item>
+    </vs-sidebar-group>
     <template #footer>
       <vs-row justify="space-between">
         <vs-avatar>

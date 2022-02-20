@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Axios from 'axios'
+import currencyFormat from './plugins/currencyFormat'
 
 import './assets/styles.scss'
 
@@ -24,6 +25,7 @@ Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
 Vue.prototype.$axios = Axios;
+Vue.prototype.$currency = currencyFormat
 
 new Vue({
 	router,

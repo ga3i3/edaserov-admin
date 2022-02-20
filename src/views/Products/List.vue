@@ -38,11 +38,10 @@
                 <router-link :to="'/products/' + product._id"
                   >Редактировать</router-link
                 >
-                <a href="javascript:void(0)">Удалить</a>
               </div>
             </div>
             <div class="right">
-              <span class="price">{{ product.price }}руб.</span>
+              <span class="price">{{ $currency(product.price) }}</span>
               <div class="stock">
                 <span>Запасы:</span>
                 <vs-input
@@ -210,6 +209,13 @@ export default {
             console.log(err);
           }
         );
+    },
+    currencyFormat(total) {
+      const total_format = new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+      }).format(total);
+      return total_format;
     },
   },
 };
