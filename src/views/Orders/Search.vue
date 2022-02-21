@@ -106,7 +106,7 @@
                   : $currency(order.total)
               }}</span>
               <div class="stock">
-                <vs-button flat :to="`/orders/view/${order._id}`">
+                <vs-button flat :to="`/dashboard/orders/view/${order._id}`">
                   Посмотреть
                 </vs-button>
               </div>

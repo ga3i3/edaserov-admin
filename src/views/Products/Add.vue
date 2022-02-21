@@ -355,7 +355,7 @@ export default {
         );
     },
     addMore() {
-      window.open("/products/add/", "_self");
+      window.open("/dashboard/products/add/", "_self");
     },
   },
 };

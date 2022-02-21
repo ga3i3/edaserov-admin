@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Sidebar />
+    <Sidebar v-if="$router.currentRoute.path != '/'" />
     <router-view />
   </div>
 </template>
@@ -14,10 +14,10 @@ export default {
     Sidebar,
   },
   created() {
-    localStorage.setItem(
-      "token",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjAzMWNhOTg5MjU4YmJlNmU0MmQ4OTUiLCJpYXQiOjE2NDQ3NzE2MjN9.ffZ-4xI1fbrJWYGjqQsDRIWWaVicz7Ag5z0h0TTJuFA"
-    );
+    // localStorage.setItem(
+    //   "token",
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjAzMWNhOTg5MjU4YmJlNmU0MmQ4OTUiLCJpYXQiOjE2NDQ3NzE2MjN9.ffZ-4xI1fbrJWYGjqQsDRIWWaVicz7Ag5z0h0TTJuFA"
+    // );
   },
 };
 </script>

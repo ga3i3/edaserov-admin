@@ -32,7 +32,9 @@
             {{ getTime(tr._timestamp) }}
           </vs-td>
           <vs-td>
-            <vs-button flat :to="`/orders/view/${tr._id}`"> Перейты </vs-button>
+            <vs-button flat :to="`/dashboard/orders/view/${tr._id}`">
+              Перейты
+            </vs-button>
           </vs-td>
         </vs-tr>
       </template>

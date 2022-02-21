@@ -35,7 +35,7 @@
               <div class="cat">{{ getCategoryName(product.cat) }}</div>
               <h2>{{ product.name }}</h2>
               <div class="links">
-                <router-link :to="'/products/' + product._id"
+                <router-link :to="'/dashboard/products/' + product._id"
                   >Редактировать</router-link
                 >
               </div>

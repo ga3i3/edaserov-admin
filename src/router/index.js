@@ -11,65 +11,75 @@ const routes = [
 		component: Home
 	},
 	{
-		path: '/orders',
+		path: '/dashboard',
+		name: 'Dashboard',
+		component: () => import('../views/Dashboard.vue'),
+	},
+	{
+		path: '/dashboard/orders',
 		name: 'Orders',
 		component: () => import('../views/Orders/Orders.vue'),
 		children: [
 			{
 				name: 'ListOrders',
-				path: '/orders/',
+				path: '/dashboard/orders/',
 				component: () => import('../views/Orders/List.vue'),
 			},
 			{
 				name: 'SearchOrder',
-				path: '/orders/search',
+				path: '/dashboard/orders/search',
 				component: () => import('../views/Orders/Search.vue'),
 			},
 			{
 				name: 'ViewOrder',
-				path: '/orders/view/:id',
+				path: '/dashboard/orders/view/:id',
 				component: () => import('../views/Orders/View.vue'),
 			},
 		],
 	},
 	{
-		path: '/products',
+		path: '/dashboard/products',
 		name: 'Products',
 		component: () => import('../views/Products/Products.vue'),
 		children: [
 			{
 				name: 'ListProducts',
-				path: '/products/',
+				path: '/dashboard/products/',
 				component: () => import('../views/Products/List.vue'),
 			},
 			{
 				name: 'AddProduct',
-				path: '/products/add',
+				path: '/dashboard/products/add',
 				component: () => import('../views/Products/Add.vue'),
 			},
 			{
 				name: 'EditProduct',
-				path: '/products/:id',
+				path: '/dashboard/products/:id',
 				component: () => import('../views/Products/Edit.vue'),
 			},
 		],
 	},
 	{
-		path: '/users',
+		path: '/dashboard/users',
 		name: 'Users',
 		component: () => import('../views/Users/Users.vue'),
 		children: [
 			{
 				name: 'ListUsers',
-				path: '/users/',
+				path: '/dashboard/users/',
 				component: () => import('../views/Users/List.vue'),
 			},
 			{
 				name: 'SearchUsers',
-				path: '/users/search',
+				path: '/dashboard/users/search',
 				component: () => import('../views/Users/Search.vue'),
 			},
 		],
+	},
+	{
+		path: '/dashboard/params',
+		name: 'Params',
+		component: () => import('../views/Params/Params.vue'),
 	}
 ]
 

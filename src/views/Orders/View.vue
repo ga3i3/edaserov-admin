@@ -237,6 +237,8 @@ export default {
     user: {},
   }),
   created() {
+    // console.log("Router", this.$router.params.id);
+    // console.log("Route", this.$route.params.id);
     this.checkHaveProduct();
     // await this.addProduct();
   },
@@ -321,6 +323,7 @@ export default {
         )
         .then(
           (res) => {
+            console.log(res);
             if (res.data.doc == null) this.notfound = true;
             this.order = res.data.doc;
             this.order.phoneFormat = this.phoneFormat(this.order.phone);

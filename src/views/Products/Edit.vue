@@ -300,6 +300,8 @@ export default {
     },
   }),
   async created() {
+    // console.log("Router", this.$router.params.id);
+    // console.log("Route", this.$route.params.id);
     await this.checkHaveProduct();
   },
   methods: {
@@ -326,6 +328,7 @@ export default {
             this.image.name = res.data.doc.image;
             console.log(res.data.doc.image);
             console.log(res.data.doc);
+            console.log(res);
           },
           (err) => {
             if (err) this.notfound = true;

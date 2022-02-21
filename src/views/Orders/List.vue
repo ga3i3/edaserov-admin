@@ -71,7 +71,7 @@
                 <h2>{{ order.name }}</h2>
               </div>
               <div class="links" v-show="false">
-                <router-link :to="'/orders/' + order._id"
+                <router-link :to="'/dashboard/orders/' + order._id"
                   >Редактировать</router-link
                 >
                 <a href="javascript:void(0)">Удалить</a>
@@ -84,7 +84,7 @@
                   : $currency(order.total)
               }}</span>
               <div class="stock">
-                <vs-button flat :to="`/orders/view/${order._id}`">
+                <vs-button flat :to="`/dashboard/orders/view/${order._id}`">
                   Посмотреть
                 </vs-button>
               </div>

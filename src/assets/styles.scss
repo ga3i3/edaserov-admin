@@ -16,6 +16,17 @@ html {
   box-sizing: inherit;
 }
 
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.auth {
+	button {
+		margin: 0 !important;
+	}
+}
+
 .default {
 	margin-left: calc(260px + 30px);
 	margin-top: 25px;
@@ -976,6 +987,111 @@ html {
 	}
 }
 
+
+.params {
+
+
+
+	.edit {
+
+		max-width: 70%;
+		width: 100%;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: space-between;	
+	}
+
+	.details {
+		max-width: calc(70% - 30px);
+		width: 100%;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 15px;
+		padding: 25px;
+	}
+
+	.save {
+		position:-webkit-sticky; 
+		position:sticky; 
+		top:0;
+		width: 30%;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		border-radius: 15px;
+		align-self: baseline;
+
+		button {
+			margin: 0;
+		}
+	}
+
+	.line {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 20px;
+		position: relative;
+
+		.inset {
+			display: flex;
+			justify-content: space-between;
+
+			> * {
+				width: calc(50% - 10px);
+			}
+
+			span {
+				display: flex;
+				flex-direction: column;
+			}
+
+			label {
+				margin-bottom: 5px !important;
+				font-size: 14px;
+				color:#6e6e6e
+			}
+
+			input {
+				height: 30px !important;
+				padding: 0 10px !important;
+				font-size: 14px !important;
+			}
+		}
+
+		label {
+			margin-bottom: 10px;
+			font-weight: 500;
+		}
+
+		input {
+			width: 100%;
+			height: 40px;
+			border-radius: 9px;
+			border: 2px solid #ddd;
+			padding: 0 15px 0 35px;
+			font-size: 18px;
+
+			&:focus {
+				border-color: #ef7b4f;
+			}
+		}
+
+		svg {
+			position: absolute;
+			left: 10px;
+			font-size: 20px;
+			top: 39px;
+		}
+
+		button {
+			margin: 0 !important;
+		}
+	}
+
+	.line.checkbox {
+		label {
+			margin: 0 !important;
+		}
+	}
+}
 
 .filepond--credits {
   display: none !important;
