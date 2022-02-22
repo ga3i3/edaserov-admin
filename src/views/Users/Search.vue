@@ -7,7 +7,7 @@
           type="text"
           v-model="search"
           placeholder="Поиск по телефону"
-          v-mask="'(###) ### ## ##'"
+          v-mask="'+7 (###) ### ## ##'"
         />
         <button
           type="button"

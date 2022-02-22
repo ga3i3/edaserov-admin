@@ -1093,6 +1093,17 @@ body {
 	}
 }
 
+.cats {
+
+	#add_new_cat {
+
+		header {
+			justify-content: flex-start !important;
+		}
+	}
+}
+
+
 .filepond--credits {
   display: none !important;
 }

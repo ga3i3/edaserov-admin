@@ -11,7 +11,7 @@
           type="text"
           v-model="search"
           placeholder="Поиск по заказам"
-          v-mask="type == 'phone' ? '(###) ### ## ##' : '#####'"
+          v-mask="type == 'phone' ? '+7 (###) ### ## ##' : '#####'"
           :readonly="type == '' ? true : false"
         />
         <button

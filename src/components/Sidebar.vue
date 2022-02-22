@@ -62,6 +62,9 @@
       <vs-sidebar-item id="products_add" to="/dashboard/products/add">
         Добавить новый
       </vs-sidebar-item>
+      <vs-sidebar-item id="products_cat" to="/dashboard/products/categories">
+        Категории
+      </vs-sidebar-item>
     </vs-sidebar-group>
 
     <vs-sidebar-group>
