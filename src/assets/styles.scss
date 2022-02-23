@@ -826,6 +826,41 @@ body {
 	}
 }
 
+#add_new_cat {
+	.line {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		margin-bottom: 15px !important;
+
+		label {
+			margin-bottom: 10px;
+			font-weight: 500;
+		}
+
+		input {
+			height: 40px;
+			border-radius: 9px;
+			border: 2px solid #ddd;
+			padding: 0 15px 0 15px;
+			font-size: 18px;
+
+			&:focus {
+				border-color: $main-color;
+			}
+		}
+	}
+
+	.inset {
+		display: flex;
+		justify-content: space-between;
+
+		input {
+			width: calc(50% - 10px);
+		}
+	}
+}
+
 .main.list {
 	max-width: 70%;
 	width: 100%;
@@ -1095,6 +1130,19 @@ body {
 
 .cats {
 
+	.working {
+		display: flex;
+		align-items: center;
+		
+		> * {
+			margin-left: 10px;
+		}
+
+		button {
+			margin-left: 0 0 0 25px !important;
+		}
+	}
+
 	#add_new_cat {
 
 		header {
@@ -1102,6 +1150,9 @@ body {
 		}
 	}
 }
+
+
+
 
 
 .filepond--credits {
