@@ -1,95 +1,35 @@
 <template>
-  <div class="default products edit add">
-    <h1>Редактировать товар</h1>
+  <div class="pages add default">
+    <h1>Редактировать страницу</h1>
 
-    <div class="wrap_main" v-if="!notfound">
+    <div class="wrap">
       <div class="content">
-        <div class="line name">
+        <div class="line">
           <label for="name">Название</label>
           <input
             type="text"
             id="name"
-            class="default_input"
+            name="name"
             v-model="form.name"
+            @input="slugGenerate"
           />
-          <Icon icon="bi:pen" />
-        </div>
-        <div class="line price">
-          <label for="price">Цена</label>
-          <input
-            type="text"
-            id="price"
-            class="default_input"
-            v-model="form.price"
-          />
-          <Icon icon="ph:currency-rub-bold" />
-        </div>
-        <div class="line">
-          <label for="description">Описание</label>
-          <textarea
-            id="description"
-            cols="30"
-            rows="10"
-            v-model="form.description"
-          ></textarea>
-          <Icon icon="bi:justify-left" />
-        </div>
-        <div class="line weight">
-          <label for="weight">Вес</label>
-          <input
-            type="text"
-            id="weight"
-            class="default_input"
-            v-model="form.weight"
-          />
-          <Icon icon="fluent:scales-24-regular" />
+          <Icon icon="bi:pencil" />
         </div>
 
-        <div class="line stock">
-          <label for="stock">Запасы</label>
-          <input
-            type="text"
-            id="stock"
-            class="default_input"
-            v-model="form.stock"
-          />
-          <Icon icon="bi:box-seam" />
+        <div class="slug">
+          <span>/</span>
+          <input type="text" v-if="form.slug" v-model="form.slug" />
         </div>
-        <div class="line">
-          <label for="option">Опции</label>
-          <div class="adding_option">
-            <input type="text" class="default_input" id="option" />
-            <vs-button flat @click="addOption"> Добавить </vs-button>
-          </div>
 
-          <Icon icon="bi:grid-3x3-gap" />
-
-          <div class="options_list" v-if="form.options.length > 0">
-            <ul>
-              <li v-for="(option, index) in form.options" :key="index">
-                <vs-input
-                  v-model="form.options[index].name"
-                  label-placeholder="Название опции"
-                />
-                <vs-input
-                  v-model="form.options[index].price"
-                  label-placeholder="Цена"
-                />
-                <vs-button flat danger @click="removeOption(index)">
-                  Удалить
-                </vs-button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="image">
-        <img
-          :src="url + '/uploads/' + image.name"
-          alt=""
-          class="old_image"
-          v-if="image.visibility"
+        <VueEditor
+          v-model="form.content"
+          :editorToolbar="toolbar"
+          id="editor"
         />
+      </div>
+      <div class="publish">
+        <img :src="url + form.image" alt="" />
+
         <file-pond
           name="test"
           ref="pond"
@@ -101,40 +41,27 @@
           v-on:processfile="onprocessfile"
           v-on:loaded="onload"
         />
-
-        <div class="cat">
-          <vs-select placeholder="Категория" v-model="form.cat">
-            <vs-option label="Бизнес ланч" value="laych">
-              Бизнес ланч
-            </vs-option>
-            <vs-option label="Салаты" value="salads"> Салаты </vs-option>
-            <vs-option label="Супы" value="soups"> Супы </vs-option>
-            <vs-option label="Горячее" value="hotter"> Горячее </vs-option>
-            <vs-option label="Десерты" value="desserts"> Десерты </vs-option>
-            <vs-option label="WOK" value="wok"> WOK </vs-option>
-          </vs-select>
-        </div>
-
-        <vs-button relief size="large" block @click="update">
-          Обновить
-        </vs-button>
+        <vs-button flat size="large" block @click="updatePage"
+          >Обновить</vs-button
+        >
       </div>
     </div>
 
-    <vs-dialog v-model="repeat" :not-close="true">
+    <vs-dialog v-model="created" :not-close="true">
       <template #header>
-        <h4 class="not-margin">Товар успешно обновлен</h4>
+        <h4 class="not-margin">Страница успешно обновлен</h4>
       </template>
 
       <template #footer>
         <div class="footer-dialog">
-          <vs-button @click="$router.push('/products')">
-            В список товаров
+          <vs-button flat @click="addMore"> Добавить еще </vs-button>
+          <vs-button @click="$router.push('/dashboard/pages')">
+            В список страниц
           </vs-button>
-          <vs-button flat @click="repeat = false"> Закрыть </vs-button>
         </div>
       </template>
     </vs-dialog>
+
     <vs-alert shadow v-if="notfound">
       <template #title> Товар не найден </template>
       Редактируемый товар в базе данных не найден
@@ -143,10 +70,12 @@
 </template>
 
 <script>
-// Import Vue FilePond
+import cyrillicToTranslit from "cyrillic-to-translit-js";
+import { VueEditor } from "vue2-editor";
+import { Icon } from "@iconify/vue2";
+
 import vueFilePond, { setOptions } from "vue-filepond";
 import store from "../../store";
-import { Icon } from "@iconify/vue2";
 
 // Import FilePond styles
 import "filepond/dist/filepond.min.css";
@@ -255,7 +184,7 @@ setOptions(labels_RU);
 
 setOptions({
   server: {
-    url: process.env.VUE_APP_MAIN_URL + "/admin/product/upload/image",
+    url: process.env.VUE_APP_MAIN_URL + "/admin/page/upload/image",
     headers: {
       token: localStorage.getItem("token"),
     },
@@ -274,41 +203,39 @@ setOptions({
 });
 
 export default {
-  name: "EditProduct",
+  name: "Add",
   components: {
-    FilePond,
+    VueEditor,
     Icon,
   },
   data: () => ({
-    url: process.env.VUE_APP_MAIN_URL,
-    repeat: false,
-    notfound: false,
-    image: {
-      visibility: true,
-      name: "",
-    },
+    url: process.env.VUE_APP_MAIN_URL + "/uploads/",
     form: {
       name: "",
-      price: "",
-      description: "",
-      weight: "",
-      stock: "",
-      options: [],
-      myFiles: [],
-      imagename: store.state.imagename,
-      cat: "",
+      slug: "",
+      content: "",
+      image: "",
     },
+    created: false,
+    notfound: false,
+    toolbar: [
+      // [{ header: [false, 1, 2, 3, 4, 5, 6] }],
+      [{ size: ["small", false, "large", "huge"] }],
+      ["bold", "italic", "underline"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["image", "code-block"],
+    ],
   }),
   async created() {
-    // console.log("Router", this.$router.params.id);
-    // console.log("Route", this.$route.params.id);
-    await this.checkHaveProduct();
+    this.$store.state.active = "";
+
+    await this.checkHavePage();
   },
   methods: {
-    checkHaveProduct() {
+    checkHavePage() {
       this.$axios
         .get(
-          `${process.env.VUE_APP_MAIN_URL}/admin/product/${this.$route.params.id}`,
+          `${process.env.VUE_APP_MAIN_URL}/admin/page/${this.$route.params.id}`,
           {
             headers: {
               token: localStorage.getItem("token"),
@@ -318,39 +245,17 @@ export default {
         .then(
           (res) => {
             if (res.data.doc == null) this.notfound = true;
-            this.form.name = res.data.doc.name;
-            this.form.price = res.data.doc.price;
-            this.form.description = res.data.doc.description;
-            this.form.weight = res.data.doc.weight;
-            this.form.stock = res.data.doc.stock;
-            this.form.options = res.data.doc.options;
-            this.form.cat = res.data.doc.cat;
-            this.image.name = res.data.doc.image;
+            this.form = res.data.doc;
           },
           (err) => {
             if (err) this.notfound = true;
           }
         );
     },
-    addOption() {
-      let nameOfOption = document.getElementById("option").value;
-      if (nameOfOption.length != 0) {
-        this.form.options.push({
-          name: nameOfOption,
-          price: null,
-        });
-        document.getElementById("option").value = "";
-      } else {
-        this.$vs.notification({
-          progress: "auto",
-          position: "bottom-right",
-          color: "danger",
-          title: "Введите название опции",
-        });
-      }
-    },
-    removeOption(index) {
-      this.form.options.splice(index, 1);
+    slugGenerate() {
+      this.form.slug = cyrillicToTranslit()
+        .transform(this.form.name, "_")
+        .toLowerCase();
     },
     handleFilePondInit: function (err, file) {
       if (err) console.log(err);
@@ -358,31 +263,30 @@ export default {
       // FilePond instance methods are available on `this.$refs.pond`
     },
     onprocessfile: function (err, file) {
-      this.image.visibility = false;
       if (err) console.log(err);
       // console.log("Filename", file);
       this.$refs.pond.onprocessfile = (error, file1) => {
         console.log("done", file1.serverId);
       };
     },
-    onload: function (res) {},
+    onload: function (res) {
+      console.log("RES", res);
+    },
 
-    async update() {
-      const data = {
+    updatePage() {
+      const form = {
         name: this.form.name,
-        description: this.form.description,
-        weight: this.form.weight,
-        options: this.form.options,
-        price: this.form.price,
-        image: this.$store.state.imagename,
-        cat: this.form.cat,
-        stock: this.form.stock,
+        slug: this.form.slug,
+        content: this.form.content,
+        image: this.$store.state.imagename
+          ? this.$store.state.imagename
+          : this.from.image,
       };
 
-      await this.$axios
+      this.$axios
         .put(
-          `${process.env.VUE_APP_MAIN_URL}/admin/product/${this.$route.params.id}`,
-          data,
+          `${process.env.VUE_APP_MAIN_URL}/admin/page/${this.$route.params.id}`,
+          form,
           {
             headers: {
               token: localStorage.getItem("token"),
@@ -392,26 +296,28 @@ export default {
         .then(
           (res) => {
             if (res.status == 200) {
-              this.repeat = true;
+              this.$vs.notification({
+                progress: "auto",
+                position: "bottom-right",
+                color: "success",
+                title: "Страница добавлена",
+              });
+
+              this.created = true;
             }
-            console.log(res);
           },
           (err) => {
             console.log(err);
           }
         );
     },
+
     addMore() {
-      window.open("/products/add/", "_self");
+      window.open("/dashboard/pages/add/", "_self");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.old_image {
-  width: 100%;
-  border-radius: 9px;
-  margin-bottom: 15px;
-}
 </style>

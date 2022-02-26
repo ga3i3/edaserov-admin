@@ -24,7 +24,7 @@
         Все странцы
       </vs-sidebar-item>
       <vs-sidebar-item id="pages_add" to="/dashboard/pages/add"
-        >Добавить</vs-sidebar-item
+        >Добавить новый</vs-sidebar-item
       >
     </vs-sidebar-group>
 

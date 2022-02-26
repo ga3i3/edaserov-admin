@@ -11,7 +11,13 @@
     <div class="details">
       <div class="overview">
         <h2>
-          Детали <vs-button @click="editMode = true">Редактировать</vs-button>
+          Детали
+          <div class="buttons">
+            <vs-button flat :to="`/dashboard/orders/print/${order._id}`"
+              >Распечатать</vs-button
+            >
+            <vs-button @click="editMode = true">Редактировать</vs-button>
+          </div>
         </h2>
         <div class="information">
           <div class="line">
@@ -94,6 +100,13 @@
           >
             Добавить товар
           </vs-button>
+
+          <div class="products_price">
+            Корзина:
+            <span>
+              {{ discount ? $currency(discount) : $currency(getSubtotal) }}
+            </span>
+          </div>
         </div>
         <div class="bottom">
           <div class="delivery">
@@ -108,6 +121,10 @@
                 <input type="text" :value="order.address.street" readonly />
                 <input type="text" :value="order.address.house" readonly />
                 <input type="text" :value="order.address.apartment" readonly />
+              </div>
+
+              <div class="delivery_price">
+                Доставка: <span>{{ $currency(order.delivery_price) }}</span>
               </div>
             </div>
 
@@ -134,12 +151,14 @@
                   min="1"
                 />
               </div>
-              <del v-if="discount">{{ getSubtotal }}</del>
+              <del v-if="discount">{{ $currency(getSubtotal) }}</del>
               <span v-if="discount" class="discount">{{
-                currencyFormat(discount)
+                order.delivery == "tohome"
+                  ? $currency(discount + order.delivery_price)
+                  : $currency(discount)
               }}</span>
               <span v-if="!discount" class="without_discount">{{
-                currencyFormat(getSubtotal)
+                $currency(getSubtotal + order.delivery_price)
               }}</span>
             </div>
           </div>
@@ -283,6 +302,17 @@ export default {
           );
         }
 
+        let bread = this.order.cart.find((x) => x.id == "bread_extra");
+        let drink = this.order.cart.find((x) => x.id == "drink_extra");
+
+        if (bread != undefined && drink != undefined) {
+          total -= 23;
+        } else if (bread != undefined && drink == undefined) {
+          total -= 3;
+        } else if (drink != undefined && bread == undefined) {
+          total -= 20;
+        }
+
         if (this.order.percent != null) {
           discount = total - (total / 100) * this.order.percent;
         }
@@ -377,7 +407,7 @@ export default {
         );
     },
     phoneFormat(phone) {
-      return phoneFormatter.format(phone, "(NNN) NNN-NNNN");
+      return phoneFormatter.format(phone, "+7 (NNN) NNN-NNNN");
     },
     plusQty(id) {
       let indexProductInCart = this.order.cart.findIndex((x) => x._gnrt === id);

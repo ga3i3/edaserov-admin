@@ -78,12 +78,15 @@
               </div>
             </div>
             <div class="right">
-              <span class="price">{{
-                order.discount
-                  ? $currency(order.discount)
-                  : $currency(order.total)
-              }}</span>
+              <span class="price">{{ $currency(getOrderTotal(order)) }} </span>
               <div class="stock">
+                <vs-button
+                  flat
+                  class="print"
+                  :to="`/dashboard/orders/print/${order._id}`"
+                >
+                  <Icon icon="bi:file-earmark-break" />Распечатать</vs-button
+                >
                 <vs-button flat :to="`/dashboard/orders/view/${order._id}`">
                   Посмотреть
                 </vs-button>
@@ -226,6 +229,31 @@ export default {
       } else if (type == "incafe") {
         return "В кафе";
       }
+    },
+
+    getOrderTotal(order) {
+      if (order.delivery == "tohome") {
+        if (order.percent) {
+          let total = order.discount + order.delivery_price;
+          return total;
+        } else {
+          let total = order.total + order.delivery_price;
+          return total;
+        }
+      } else {
+        if (order.percent) {
+          return order.discount;
+        } else {
+          return order.total;
+        }
+      }
+    },
+
+    toPrint(order) {
+      this.$router.push({
+        name: "PrintOrder",
+        params: { order },
+      });
     },
   },
 };

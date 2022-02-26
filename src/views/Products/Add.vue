@@ -123,7 +123,7 @@
       <template #footer>
         <div class="footer-dialog">
           <vs-button flat @click="addMore"> Добавить еще </vs-button>
-          <vs-button @click="$router.push('/products')">
+          <vs-button @click="$router.push('/dashboard/products')">
             В список товаров
           </vs-button>
         </div>

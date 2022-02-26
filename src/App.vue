@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <Sidebar v-if="$router.currentRoute.path != '/'" />
+    <Sidebar
+      v-if="
+        $router.currentRoute.path != '/' &&
+        !$router.currentRoute.path.includes('print')
+      "
+    />
     <router-view />
   </div>
 </template>

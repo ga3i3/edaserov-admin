@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,28 @@ const routes = [
 		path: '/dashboard',
 		name: 'Dashboard',
 		component: () => import('../views/Dashboard.vue'),
+	},
+	{
+		path: '/dashboard/pages',
+		name: 'Pages',
+		component: () => import('../views/Pages/Pages.vue'),
+		children: [
+			{
+				name: 'ListPages',
+				path: '/dashboard/pages/',
+				component: () => import('../views/Pages/List.vue'),
+			},
+			{
+				name: 'AddPages',
+				path: '/dashboard/pages/add',
+				component: () => import('../views/Pages/Add.vue'),
+			},
+			{
+				name: 'EditPages',
+				path: '/dashboard/pages/:id',
+				component: () => import('../views/Pages/Edit.vue'),
+			},
+		],
 	},
 	{
 		path: '/dashboard/orders',
@@ -34,6 +57,14 @@ const routes = [
 				name: 'ViewOrder',
 				path: '/dashboard/orders/view/:id',
 				component: () => import('../views/Orders/View.vue'),
+			},
+			{
+				name: 'PrintOrder',
+				path: '/dashboard/orders/print/:id',
+				component: () => import('../views/Orders/Print.vue'),
+				meta: {
+					auth: true
+				}
 			},
 		],
 	},
@@ -92,6 +123,11 @@ const router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes
+});
+
+router.beforeEach((to, from, next) => {
+	store.state.imagename = ''
+	next()
 })
 
 export default router
