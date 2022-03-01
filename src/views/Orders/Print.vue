@@ -403,7 +403,7 @@ export default {
         );
     },
     getTime(time) {
-      return dayjs(parseInt(time)).format("DD.MM.YYYY");
+      return dayjs(time).format("DD.MM.YYYY");
     },
     phoneFormat(phone) {
       return phoneFormatter.format(phone, "+7 (NNN) NNN NN NN");

@@ -67,7 +67,10 @@
                     class="main"
                     readonly
                   />
-                  <div class="option" v-if="item.options.length != 0">
+                  <div
+                    class="option"
+                    v-if="item.options.length > 0 && item.select != undefined"
+                  >
                     <input type="text" v-model="item.select.name" readonly />
                     <span>{{ item.select.price }}руб.</span>
                   </div>
@@ -283,7 +286,7 @@ export default {
         let select_prices = [];
         this.order.cart.map((item) => {
           prices.push(item.quantity * item.price);
-          if (item.options.length != 0) {
+          if (item.options.length != 0 && item.select != undefined) {
             select_prices.push(item.quantity * parseInt(item.select.price));
           }
         });
